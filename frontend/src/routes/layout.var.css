@@ -1,0 +1,47 @@
+* {
+	transition-property: background-color, border-color, opacity, outline;
+	transition-duration: 0.2s;
+	transition-timing-function: cubic-bezier(0.47, 1.64, 0.41, 0.8);
+}
+
+:root {
+	--body_width: 720px;
+	--nav_height: 60px;
+	/* --animTime1: 0.2s; */
+	
+	--sp1: 24px;
+	--sp2: 12px;
+	--rd1: 4px;
+
+	--cl1: #4d0083;
+	--cl2: red;
+
+	--overlay: rgba(128, 128, 128, 0.8);
+
+	--ac1_: black;
+	--ac2_: rgb(100, 100, 100);
+	--ac3_: rgb(128, 128, 128);
+	--ac4_: rgb(235, 235, 235);
+	--ac5_: white;
+
+}
+
+main {
+	--ac1: var(--ac1_);
+	--ac2: var(--ac2_);
+	--ac3: var(--ac3_);
+	--ac4: var(--ac4_);
+	--ac5: var(--ac5_);
+
+	--ac6: var(--ac5_);
+}
+
+main.dark {
+	--ac1: white;
+	--ac2: rgb(200, 200, 200);
+	--ac3: rgb(128, 128, 128);
+	--ac4: rgb(28, 28, 28);
+	--ac5: rgb(0, 0, 0);
+	
+	--ac6: var(--ac4);
+}
