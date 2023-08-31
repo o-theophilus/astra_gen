@@ -2,30 +2,7 @@
 	import Prompt from './page.prompt.svelte';
 	import { loading } from '$lib/store.js';
 
-	let history = [
-		{
-			prompt: 'flowery button up',
-			category: 'Top',
-			type: 'Shirt',
-			urls: [
-				'https://oaidalleapiprodscus.blob.core.windows.net/private/org-lHjOntuceEFomYSRXZUjKxVR/user-lFbkUqxbRqMqj2KqzaHujFwG/img-zOEEX52IrBXN7xS8wPX9CgVw.png?st=2023-08-31T19%3A10%3A16Z&se=2023-08-31T21%3A10%3A16Z&sp=r&sv=2021-08-06&sr=b&rscd=inline&rsct=image/png&skoid=6aaadede-4fb3-4698-a8f6-684d7786b067&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2023-08-31T00%3A39%3A12Z&ske=2023-09-01T00%3A39%3A12Z&sks=b&skv=2021-08-06&sig=kh6PQZv2JGxjJyV/1aQdwsdf7qRZ7T917i0m8pXKSYE%3D',
-				'https://oaidalleapiprodscus.blob.core.windows.net/private/org-lHjOntuceEFomYSRXZUjKxVR/user-lFbkUqxbRqMqj2KqzaHujFwG/img-zOEEX52IrBXN7xS8wPX9CgVw.png?st=2023-08-31T19%3A10%3A16Z&se=2023-08-31T21%3A10%3A16Z&sp=r&sv=2021-08-06&sr=b&rscd=inline&rsct=image/png&skoid=6aaadede-4fb3-4698-a8f6-684d7786b067&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2023-08-31T00%3A39%3A12Z&ske=2023-09-01T00%3A39%3A12Z&sks=b&skv=2021-08-06&sig=kh6PQZv2JGxjJyV/1aQdwsdf7qRZ7T917i0m8pXKSYE%3D',
-				'https://oaidalleapiprodscus.blob.core.windows.net/private/org-lHjOntuceEFomYSRXZUjKxVR/user-lFbkUqxbRqMqj2KqzaHujFwG/img-zOEEX52IrBXN7xS8wPX9CgVw.png?st=2023-08-31T19%3A10%3A16Z&se=2023-08-31T21%3A10%3A16Z&sp=r&sv=2021-08-06&sr=b&rscd=inline&rsct=image/png&skoid=6aaadede-4fb3-4698-a8f6-684d7786b067&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2023-08-31T00%3A39%3A12Z&ske=2023-09-01T00%3A39%3A12Z&sks=b&skv=2021-08-06&sig=kh6PQZv2JGxjJyV/1aQdwsdf7qRZ7T917i0m8pXKSYE%3D',
-				'https://oaidalleapiprodscus.blob.core.windows.net/private/org-lHjOntuceEFomYSRXZUjKxVR/user-lFbkUqxbRqMqj2KqzaHujFwG/img-zOEEX52IrBXN7xS8wPX9CgVw.png?st=2023-08-31T19%3A10%3A16Z&se=2023-08-31T21%3A10%3A16Z&sp=r&sv=2021-08-06&sr=b&rscd=inline&rsct=image/png&skoid=6aaadede-4fb3-4698-a8f6-684d7786b067&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2023-08-31T00%3A39%3A12Z&ske=2023-09-01T00%3A39%3A12Z&sks=b&skv=2021-08-06&sig=kh6PQZv2JGxjJyV/1aQdwsdf7qRZ7T917i0m8pXKSYE%3D'
-			]
-		},
-		{
-			prompt: 'flowery button up',
-			category: 'Top',
-			type: 'Shirt',
-			urls: [
-				'https://oaidalleapiprodscus.blob.core.windows.net/private/org-lHjOntuceEFomYSRXZUjKxVR/user-lFbkUqxbRqMqj2KqzaHujFwG/img-zOEEX52IrBXN7xS8wPX9CgVw.png?st=2023-08-31T19%3A10%3A16Z&se=2023-08-31T21%3A10%3A16Z&sp=r&sv=2021-08-06&sr=b&rscd=inline&rsct=image/png&skoid=6aaadede-4fb3-4698-a8f6-684d7786b067&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2023-08-31T00%3A39%3A12Z&ske=2023-09-01T00%3A39%3A12Z&sks=b&skv=2021-08-06&sig=kh6PQZv2JGxjJyV/1aQdwsdf7qRZ7T917i0m8pXKSYE%3D',
-				'https://oaidalleapiprodscus.blob.core.windows.net/private/org-lHjOntuceEFomYSRXZUjKxVR/user-lFbkUqxbRqMqj2KqzaHujFwG/img-zOEEX52IrBXN7xS8wPX9CgVw.png?st=2023-08-31T19%3A10%3A16Z&se=2023-08-31T21%3A10%3A16Z&sp=r&sv=2021-08-06&sr=b&rscd=inline&rsct=image/png&skoid=6aaadede-4fb3-4698-a8f6-684d7786b067&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2023-08-31T00%3A39%3A12Z&ske=2023-09-01T00%3A39%3A12Z&sks=b&skv=2021-08-06&sig=kh6PQZv2JGxjJyV/1aQdwsdf7qRZ7T917i0m8pXKSYE%3D',
-				'https://oaidalleapiprodscus.blob.core.windows.net/private/org-lHjOntuceEFomYSRXZUjKxVR/user-lFbkUqxbRqMqj2KqzaHujFwG/img-zOEEX52IrBXN7xS8wPX9CgVw.png?st=2023-08-31T19%3A10%3A16Z&se=2023-08-31T21%3A10%3A16Z&sp=r&sv=2021-08-06&sr=b&rscd=inline&rsct=image/png&skoid=6aaadede-4fb3-4698-a8f6-684d7786b067&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2023-08-31T00%3A39%3A12Z&ske=2023-09-01T00%3A39%3A12Z&sks=b&skv=2021-08-06&sig=kh6PQZv2JGxjJyV/1aQdwsdf7qRZ7T917i0m8pXKSYE%3D',
-				'https://oaidalleapiprodscus.blob.core.windows.net/private/org-lHjOntuceEFomYSRXZUjKxVR/user-lFbkUqxbRqMqj2KqzaHujFwG/img-zOEEX52IrBXN7xS8wPX9CgVw.png?st=2023-08-31T19%3A10%3A16Z&se=2023-08-31T21%3A10%3A16Z&sp=r&sv=2021-08-06&sr=b&rscd=inline&rsct=image/png&skoid=6aaadede-4fb3-4698-a8f6-684d7786b067&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2023-08-31T00%3A39%3A12Z&ske=2023-09-01T00%3A39%3A12Z&sks=b&skv=2021-08-06&sig=kh6PQZv2JGxjJyV/1aQdwsdf7qRZ7T917i0m8pXKSYE%3D'
-			]
-		}
-	];
+	let history = [];
 
 	let error = {};
 
