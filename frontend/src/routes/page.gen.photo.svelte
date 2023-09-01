@@ -1,5 +1,5 @@
 <script>
-	import { loading, module } from '$lib/store.js';
+	import { loading, module, size } from '$lib/store.js';
 	import { createEventDispatcher } from 'svelte';
 	let emit = createEventDispatcher();
 
@@ -19,7 +19,7 @@
 			body: JSON.stringify({
 				src,
 				n: 4,
-				size: '256x256'
+				size: `${size}x${size}`
 			})
 		});
 

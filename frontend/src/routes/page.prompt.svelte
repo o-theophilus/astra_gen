@@ -1,5 +1,5 @@
 <script>
-	import { loading } from '$lib/store.js';
+	import { loading, size } from '$lib/store.js';
 	import { tags, prompt } from '$lib/tools.js';
 	import { createEventDispatcher } from 'svelte';
 
@@ -30,8 +30,7 @@
 			body: JSON.stringify({
 				prompt: prompt(input),
 				n: 4,
-				size: '256x256'
-				// size: '1024x1024'
+				size: `${size}x${size}`
 			})
 		});
 

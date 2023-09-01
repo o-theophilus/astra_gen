@@ -1,5 +1,5 @@
 <script>
-	import { module, loading, portal } from '$lib/store.js';
+	import { module, loading, portal, size } from '$lib/store.js';
 
 	const submit = async () => {
 		$portal = {
@@ -17,7 +17,7 @@
 			body: JSON.stringify({
 				src: $module.src,
 				n: 4,
-				size: '256x256'
+				size: `${size}x${size}`
 			})
 		});
 
