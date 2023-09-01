@@ -31,6 +31,7 @@
 		inset: 0;
 
 		background-color: var(--overlay);
+		z-index: 1;
 	}
 
 	.block {

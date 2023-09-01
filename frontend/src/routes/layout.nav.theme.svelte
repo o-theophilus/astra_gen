@@ -38,11 +38,7 @@
 		height: var(--size);
 
 		background-color: var(--ac3);
-		border: none;
 		border-radius: calc(var(--size) / 2);
-		cursor: pointer;
-
-		font-size: small;
 	}
 	div {
 		position: absolute;

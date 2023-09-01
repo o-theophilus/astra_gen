@@ -1,6 +1,6 @@
 <script>
-	import { createEventDispatcher } from 'svelte';
 	import { loading } from '$lib/store.js';
+	import { createEventDispatcher } from 'svelte';
 
 	let emit = createEventDispatcher();
 

@@ -91,16 +91,20 @@ textarea {
 
 
 .btn {
-	border: none;
 	padding: var(--sp2);
 	border-radius: var(--rd1);
 
 	background-color: var(--ac3);
 	color: var(--ac5_);
-
-	cursor: pointer;
 }
 
 .btn:hover {
 	background-color: var(--cl1);
+}
+
+button{
+	padding: 0;
+	border: none;
+	cursor: pointer;
+	background-color: transparent;
 }
