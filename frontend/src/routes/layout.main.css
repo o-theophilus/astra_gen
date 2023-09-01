@@ -29,9 +29,17 @@ select,
 input,
 button {
 	font-family: "JosefinSans", 'Segoe UI', Tahoma, Verdana, sans-serif;
-	font-size: 16px;
+	font-size: 12px;
 }
-
+@media screen and (min-width: 500px) {
+	:root,
+	textarea,
+	select,
+	input,
+	button {
+		font-size: 16px;
+	}
+}
 
 
 

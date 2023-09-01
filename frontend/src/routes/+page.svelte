@@ -68,7 +68,13 @@
 
 <style>
 	section {
-		min-height: calc(100vh - var(--nav_height) - var(--sp1) - 218px);
+		--prompt_height: 188px;
+		min-height: calc(100vh - var(--nav_height) - var(--sp1) - var(--prompt_height));
+	}
+	@media screen and (min-width: 500px) {
+		section {
+			--prompt_height: 216px;
+		}
 	}
 	.gen {
 		margin: var(--sp1) auto;
