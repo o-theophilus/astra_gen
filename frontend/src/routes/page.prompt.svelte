@@ -1,30 +1,25 @@
 <script>
 	import { loading } from '$lib/store.js';
+	import { tags, prompt } from '$lib/tools.js';
 	import { createEventDispatcher } from 'svelte';
 
 	let emit = createEventDispatcher();
 
+	let input = {};
+	export let error = {};
+
 	const validate = () => {
 		error = {};
 
-		if (!form.prompt) {
+		if (!input.prompt) {
 			error.prompt = 'cannot be empty';
 		}
 
 		Object.keys(error).length === 0 && submit();
 	};
 
-	const prompt = (form) => {
-		return `
-Create a ${form.prompt} ${form.category} on a plain white background. 
-The ${form.category} should be a ${form.type} and should only show the clothing item, no human. 
-Incorporate the following specifications into the ${form.category} design: ${form.prompt}.
-The cloth should be realistic and the proportion shoulb be accurate.
-`;
-	};
-
 	const submit = async () => {
-		$loading = "Generating Images";
+		$loading = 'Generating Images';
 		let resp = await fetch('https://api.openai.com/v1/images/generations', {
 			method: 'post',
 			headers: {
@@ -33,9 +28,10 @@ The cloth should be realistic and the proportion shoulb be accurate.
 				'OpenAI-Organization': import.meta.env.VITE_OPENAI_ORG
 			},
 			body: JSON.stringify({
-				prompt: prompt(form),
+				prompt: prompt(input),
 				n: 4,
 				size: '256x256'
+				// size: '1024x1024'
 			})
 		});
 
@@ -53,124 +49,38 @@ The cloth should be realistic and the proportion shoulb be accurate.
 			}
 
 			emit('ok', {
-				prompt: form.prompt,
-				category: form.category,
-				type: form.type,
+				input: { ...input },
 				urls
 			});
 
-			form.prompt = '';
+			input.prompt = '';
 		} else {
 			error.error = resp.error.message;
 		}
 	};
-
-	const categories = {
-		Top: [
-			'Shirt',
-			'Blouse',
-			'T-shirt',
-			'Tank top',
-			'Sweatshirt',
-			'Hoodie',
-			'Sweater',
-			'Cardigan',
-			'Jacket',
-			'Coat'
-		],
-		Bottom: ['Pants', 'Jeans', 'Trouser', 'Leggings', 'Skirt', 'Shorts', 'Capri', 'Culotte'],
-		Dress: [
-			'Maxi dress',
-			'Mini dress',
-			'Midi dress',
-			'Wrap dress',
-			'Shift dress',
-			'Sheath dress',
-			'A-line dress',
-			'Ball gown'
-		],
-		'Jumpsuit & Romper': [
-			'Jumpsuit',
-			'Romper',
-			'Overall',
-			'Playsuit',
-			'Utility jumpsuit',
-			'Denim jumpsuit'
-		],
-		Gown: [
-			'Evening gown',
-			'Formal gown',
-			'Wedding gown',
-			'Prom gown',
-			'Ballroom gown',
-			'Red carpet gown'
-		],
-		Outerwear: ['Jacket', 'Coat', 'Parka', 'Trench coat', 'Windbreaker', 'Puffer jacket', 'Blazer'],
-		'Active Wear': [
-			'Activewear top',
-			'Sports bra',
-			'Leggings',
-			'Athletic shorts',
-			'Track pants',
-			'Hoodie',
-			'Athletic jacket'
-		],
-		Intimate: ['Bra', 'Panty', 'Underwear', 'Lingerie set', 'Shapewear'],
-		Swimwear: ['Bikini', 'One-piece swimsuit', 'Tankini', 'Swim trunk'],
-		Accessory: ['Scarf', 'Hat', 'Glove', 'Belt', 'Tie', 'Headband'],
-		Footwear: ['Sneaker', 'Boot', 'Sandal', 'Heel', 'Flat', 'Loafer'],
-		Sleepwear: ['Pajama', 'Nightgown', 'Sleep shirt', 'Sleep short'],
-		Loungewear: ['Lounge pant', 'Lounge top', 'Robe'],
-		'Formal Wear': ['Tuxedo', 'Suit', 'Evening gown', 'Formal dress'],
-		'Work Wear': ['Business suit', 'Dress shirt', 'Dress pant', 'Pencil skirt'],
-		'Casual Wear': ['Everyday casual outfit'],
-		'Maternity Wear': ['Maternity dress', 'Maternity top', 'Maternity pant'],
-		'Ethnic Wear': ['Traditional clothing from various cultures']
-	};
-	let form = {
-		category: Object.keys(categories)[0],
-		type: categories[Object.keys(categories)[0]][0]
-	};
-
-	export let error = {};
 </script>
 
 <section>
 	<div class="block">
 		<div class="line">
-			<label>
-				Category
-				<select
-					class="wide"
-					bind:value={form.category}
-					on:change={() => {
-						form.type = categories[form.category][0];
-					}}
-				>
-					{#each Object.keys(categories) as x}
-						<option value={x}>
-							{x}
-						</option>
-					{/each}
-				</select>
-			</label>
-
-			<label>
-				Type
-				<select class="wide" bind:value={form.type}>
-					{#each categories[form.category] as x}
-						<option value={x}>
-							{x}
-						</option>
-					{/each}
-				</select>
-			</label>
+			{#each Object.entries(tags) as [key, value]}
+				<label>
+					{key}
+					<select class="wide" bind:value={input[key]}>
+						{#each value as x}
+							<option value={x}>
+								{x}
+							</option>
+						{/each}
+					</select>
+				</label>
+			{/each}
 		</div>
 		<br />
 		<label for="prompt"> Prompt </label>
 		<div class="line">
 			<input
-				bind:value={form.prompt}
+				bind:value={input.prompt}
 				id="prompt"
 				type="text"
 				placeholder="Describe your clothing idea"

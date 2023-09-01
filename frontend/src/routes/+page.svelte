@@ -27,16 +27,23 @@
 		</div>
 	</div>
 
-	{#each history as gen}
+	{#each history as x}
 		<div class="gen">
 			<div class="block">
-				{gen.category} | {gen.type} | {gen.prompt}
+				{x.input.gender} |
+				{x.input.category} |
+				{x.input.style} |
+				{x.input.material} |
+				{x.input.pattern} |
+				{x.input.fit} |
+				{x.input.size} |
+				{x.input.prompt}
 				<br />
 				<br />
 				<div class="image">
-					{#each gen.urls as src}
+					{#each x.urls as src}
 						<Photo
-							{gen}
+							input={x.input}
 							{src}
 							on:ok={(e) => {
 								history.push(e.detail);

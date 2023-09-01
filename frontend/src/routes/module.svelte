@@ -1,9 +1,9 @@
 <script>
 	import { module, loading, portal } from '$lib/store.js';
 
-	const submit = async (src, form) => {
+	const submit = async () => {
 		$portal = {
-			error: ""
+			error: ''
 		};
 
 		$loading = 'Generating Variations';
@@ -15,7 +15,7 @@
 				'OpenAI-Organization': import.meta.env.VITE_OPENAI_ORG
 			},
 			body: JSON.stringify({
-				src,
+				src: $module.src,
 				n: 4,
 				size: '256x256'
 			})
@@ -34,10 +34,9 @@
 				urls.push(x.url);
 			}
 
+			$module.input.prompt += ' -var';
 			$portal = {
-				prompt: `${form.prompt} (Variation)`,
-				category: form.category,
-				type: form.type,
+				input: $module.input,
 				urls
 			};
 		} else {
@@ -58,18 +57,20 @@
 		role="presentation"
 	>
 		<div class="block">
-			{$module.gen.category} | {$module.gen.type} | {$module.gen.prompt}
+			{$module.input.gender} |
+			{$module.input.category} |
+			{$module.input.style} |
+			{$module.input.material} |
+			{$module.input.pattern} |
+			{$module.input.fit} |
+			{$module.input.size} |
+			{$module.input.prompt}
 			<br />
 			<br />
-			<img src={$module.src} alt={$module.gen.prompt} onerror="this.src='/image/error.png'" />
+			<img src={$module.src} alt={$module.input.prompt} onerror="this.src='/image/error.png'" />
 			<br />
 			<br />
-			<button
-				class="btn"
-				on:click|stopPropagation={() => {
-					submit($module.src, $module.gen);
-				}}
-			>
+			<button class="btn" on:click|stopPropagation={submit}>
 				Get Variations
 
 				<svg width="16px" viewBox="0 0 226.22 226.22">
