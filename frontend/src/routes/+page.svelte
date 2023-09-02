@@ -1,7 +1,7 @@
 <script>
 	import { portal } from '$lib/store.js';
 	import Prompt from './page.prompt.svelte';
-	import Photo from './page.gen.photo.svelte';
+	import Photo from './page.photo.svelte';
 
 	let history = [];
 	let error = {};
@@ -13,6 +13,7 @@
 		} else {
 			error = $portal;
 		}
+		$portal = '';
 	}
 </script>
 

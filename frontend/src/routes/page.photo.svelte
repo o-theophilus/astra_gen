@@ -36,9 +36,10 @@
 				urls.push(x.url);
 			}
 
-			input.prompt += ' -var';
+			let _input = { ...input };
+			_input.prompt += ' -var';
 			emit('ok', {
-				input,
+				input: _input,
 				urls
 			});
 		} else {
