@@ -79,7 +79,7 @@
 
 <section>
 	<div class="block">
-		<label for="prompt"> Prompt (Describe your clothing idea)</label>
+		<label for="prompt"> Describe your clothing idea:</label>
 		<div class="line">
 			<input
 				bind:value={user_prompt}
