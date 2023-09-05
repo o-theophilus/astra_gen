@@ -18,33 +18,16 @@
 </script>
 
 <section>
-	<div class="gen">
-		<div class="block">
-			<h1>Instruction</h1>
-			<p>
-				Select the clothing category and type from the options provided. Then, describe any specific
-				style, color, or design details for the clothing. Be detailed for better results.
-			</p>
-		</div>
-	</div>
-
 	{#each history as x}
 		<div class="gen">
 			<div class="block">
-				{x.input.gender} |
-				{x.input.category} |
-				{x.input.style} |
-				{x.input.material} |
-				{x.input.pattern} |
-				{x.input.fit} |
-				{x.input.size} |
-				{x.input.prompt}
+				{x.user_prompt}
 				<br />
 				<br />
 				<div class="image">
 					{#each x.urls as src}
 						<Photo
-							input={x.input}
+							user_prompt={x.user_prompt}
 							{src}
 							on:ok={(e) => {
 								history.push(e.detail);
@@ -69,12 +52,12 @@
 
 <style>
 	section {
-		--prompt_height: 188px;
-		min-height: calc(100vh - var(--nav_height) - var(--sp1) - var(--prompt_height));
+		--prompt_height: 112px;
+		min-height: calc(100vh - var(--nav_height) - var(--prompt_height));
 	}
 	@media screen and (min-width: 500px) {
 		section {
-			--prompt_height: 216px;
+			--prompt_height: 124px;
 		}
 	}
 	.gen {

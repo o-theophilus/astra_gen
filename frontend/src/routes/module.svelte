@@ -34,9 +34,8 @@
 				urls.push(x.url);
 			}
 
-			$module.input.prompt += ' -var';
 			$portal = {
-				input: $module.input,
+				user_prompt: `${$module.user_prompt} -var`,
 				urls
 			};
 		} else {
@@ -57,17 +56,10 @@
 		role="presentation"
 	>
 		<div class="block">
-			{$module.input.gender} |
-			{$module.input.category} |
-			{$module.input.style} |
-			{$module.input.material} |
-			{$module.input.pattern} |
-			{$module.input.fit} |
-			{$module.input.size} |
-			{$module.input.prompt}
+			{$module.user_prompt}
 			<br />
 			<br />
-			<img src={$module.src} alt={$module.input.prompt} onerror="this.src='/image/error.png'" />
+			<img src={$module.src} alt={$module.user_prompt} onerror="this.src='/image/error.png'" />
 			<br />
 			<br />
 			<button class="btn" on:click|stopPropagation={submit}>

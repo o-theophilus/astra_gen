@@ -13,7 +13,7 @@ def create_app():
     def index():
         return jsonify({
             "status": 200,
-            "message": "Welcome to Orbeat"
+            "message": "Welcome to Astra-Gen"
         })
 
     @app.post("/variations")

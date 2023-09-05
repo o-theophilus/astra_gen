@@ -4,7 +4,7 @@
 	let emit = createEventDispatcher();
 
 	export let src;
-	export let input;
+	export let user_prompt;
 
 	const submit = async () => {
 		emit('error', { error: '' });
@@ -36,10 +36,8 @@
 				urls.push(x.url);
 			}
 
-			let _input = { ...input };
-			_input.prompt += ' -var';
 			emit('ok', {
-				input: _input,
+				user_prompt: `${user_prompt} -var`,
 				urls
 			});
 		} else {
@@ -58,13 +56,13 @@
 	</button>
 	<img
 		{src}
-		alt={input.prompt}
+		alt={user_prompt.prompt}
 		onerror="this.src='/image/error.png'"
 		role="presentation"
 		on:click={() => {
 			$module = {
-				input,
-				src
+				src,
+				user_prompt
 			};
 		}}
 	/>

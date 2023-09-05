@@ -1,24 +1,42 @@
 <script>
-	import { loading, size } from '$lib/store.js';
-	import { tags, prompt } from '$lib/tools.js';
+	import { loading, size, history } from '$lib/store.js';
 	import { createEventDispatcher } from 'svelte';
 
 	let emit = createEventDispatcher();
 
-	let input = {};
+	let user_prompt;
 	export let error = {};
 
 	const validate = () => {
 		error = {};
-
-		if (!input.prompt) {
+		if (!user_prompt) {
 			error.prompt = 'cannot be empty';
 		}
-
-		Object.keys(error).length === 0 && submit();
+		Object.keys(error).length === 0 && translate_prompt();
 	};
 
-	const submit = async () => {
+	const translate_prompt = async () => {
+		$loading = 'Generating Images';
+		let resp = await fetch('https://api.openai.com/v1/chat/completions', {
+			method: 'post',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${import.meta.env.VITE_OPENAI_KEY}`,
+				'OpenAI-Organization': import.meta.env.VITE_OPENAI_ORG
+			},
+			body: JSON.stringify({
+				model: 'gpt-3.5-turbo',
+				messages: history(user_prompt),
+				temperature: 0.2
+			})
+		});
+		$loading = false;
+
+		resp = await resp.json();
+		generate_image(resp.choices[0].message.content);
+	};
+
+	const generate_image = async (dall_e_prompt) => {
 		$loading = 'Generating Images';
 		let resp = await fetch('https://api.openai.com/v1/images/generations', {
 			method: 'post',
@@ -28,7 +46,7 @@
 				'OpenAI-Organization': import.meta.env.VITE_OPENAI_ORG
 			},
 			body: JSON.stringify({
-				prompt: prompt(input),
+				prompt: dall_e_prompt,
 				n: 4,
 				size: `${size}x${size}`
 			})
@@ -48,11 +66,11 @@
 			}
 
 			emit('ok', {
-				input: { ...input },
+				user_prompt,
 				urls
 			});
 
-			input.prompt = '';
+			user_prompt = '';
 		} else {
 			error.error = resp.error.message;
 		}
@@ -61,28 +79,13 @@
 
 <section>
 	<div class="block">
-		<div class="line">
-			{#each Object.entries(tags) as [key, value]}
-				<label>
-					{key}
-					<select class="wide" bind:value={input[key]}>
-						{#each value as x}
-							<option value={x}>
-								{x}
-							</option>
-						{/each}
-					</select>
-				</label>
-			{/each}
-		</div>
-		<br />
-		<label for="prompt"> Prompt </label>
+		<label for="prompt"> Prompt (Describe your clothing idea)</label>
 		<div class="line">
 			<input
-				bind:value={input.prompt}
+				bind:value={user_prompt}
 				id="prompt"
 				type="text"
-				placeholder="Describe your clothing idea"
+				placeholder="E.g. A loose red shirt made of suede for men to go for dinner."
 				on:keypress={(e) => {
 					if (e.key == 'Enter') {
 						validate();
@@ -134,7 +137,6 @@
 		display: flex;
 	}
 
-	.wide,
 	label,
 	input {
 		width: 100%;
