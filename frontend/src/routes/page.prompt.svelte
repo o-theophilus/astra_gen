@@ -33,7 +33,7 @@
 		$loading = false;
 
 		resp = await resp.json();
-		console.log(resp.choices[0].message.content);
+		// console.log(resp.choices[0].message.content);
 		generate_image(resp.choices[0].message.content);
 	};
 
