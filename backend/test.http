@@ -10,8 +10,8 @@ content-type: application/json
 ###
 
 
-### Init
-post {{host}}/gen HTTP/1.1
+### test
+get {{host}}/test HTTP/1.1
 content-type: application/json
 
 {
