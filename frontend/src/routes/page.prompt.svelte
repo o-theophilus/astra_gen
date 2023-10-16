@@ -78,64 +78,66 @@
 	};
 </script>
 
-<section>
-	<div class="block">
-		<label for="prompt"> Describe your clothing idea:</label>
-		<div class="line">
-			<input
-				bind:value={user_prompt}
-				id="prompt"
-				type="text"
-				placeholder="E.g. A loose red shirt made of suede for men to go for dinner."
-				on:keypress={(e) => {
-					if (e.key == 'Enter') {
-						validate();
-					}
-				}}
-			/>
+<div class="block">
+	<label for="prompt"> Describe your clothing idea:</label>
+	<div class="input">
+		<input
+			bind:value={user_prompt}
+			id="prompt"
+			type="text"
+			placeholder="E.g. A loose red shirt made of suede for men to go for dinner."
+			on:keypress={(e) => {
+				if (e.key == 'Enter') {
+					validate();
+				}
+			}}
+		/>
 
-			<button class="btn" on:click={validate}>
-				<svg viewBox="0 0 16 16" width="20px"
-					><path
-						fill="currentColor"
-						d="M.5 1.163A1 1 0 0 1 1.97.28l12.868 6.837a1 1 0 0 1 0 1.766L1.969 15.72A1 1 0 0 1 .5 14.836V10.33a1 1 0 0 1 .816-.983L8.5 8 1.316 6.653A1 1 0 0 1 .5 5.67V1.163Z"
-					/></svg
-				>
-			</button>
-		</div>
-
-		{#if error.prompt}
-			<br />
-			<span class="error">
-				{error.prompt}
-			</span>
-		{/if}
-
-		{#if error.error}
-			<br />
-			<span class="error">
-				{error.error}
-			</span>
-		{/if}
+		<button class="btn" on:click={validate}>
+			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 35 35" width="32">
+				<path
+					d="M23.6789 4.89647L10.9153 9.13688C2.33553 12.0062 2.33553 16.6848 10.9153 19.54L14.7034 20.798L15.9614 24.5861C18.8166 33.1659 23.5093 33.1659 26.3645 24.5861L30.6191 11.8366C32.5131 6.11206 29.4035 2.98829 23.6789 4.89647ZM24.1312 12.5009L18.76 17.9004C18.548 18.1124 18.2795 18.2114 18.0109 18.2114C17.7423 18.2114 17.4738 18.1124 17.2618 17.9004C16.8519 17.4905 16.8519 16.812 17.2618 16.4021L22.633 11.0027C23.0429 10.5928 23.7213 10.5928 24.1312 11.0027C24.5411 11.4126 24.5411 12.091 24.1312 12.5009Z"
+				/>
+			</svg>
+		</button>
 	</div>
-</section>
+
+	{#if error.prompt}
+		<br />
+		<span class="error">
+			{error.prompt}
+		</span>
+	{/if}
+
+	{#if error.error}
+		<br />
+		<span class="error">
+			{error.error}
+		</span>
+	{/if}
+</div>
 
 <style>
-	section {
-		position: sticky;
-		bottom: 0;
-
-		background-color: var(--ac4);
-	}
-
 	.block {
 		max-width: var(--body_width);
 		margin: auto;
 		padding: var(--sp1);
 	}
 
-	.line {
+	.input {
 		display: flex;
+		gap: var(--sp2);
+
+		background-color: rgba(217, 217, 217, 0.1);
+		padding: var(--sp2);
+		border-radius: var(--sp2);
+	}
+
+	label {
+		display: block;
+		font-weight: 500;
+		text-align: center;
+		margin-bottom: var(--sp2);
 	}
 
 	label,
@@ -145,8 +147,6 @@
 
 	.btn {
 		display: flex;
-		justify-content: center;
-		align-items: center;
-		width: 72px;
+		fill: white;
 	}
 </style>

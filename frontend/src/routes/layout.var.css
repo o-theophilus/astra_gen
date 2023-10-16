@@ -7,10 +7,10 @@
 :root {
 	--body_width: 720px;
 	--nav_height: 60px;
-	/* --animTime1: 0.2s; */
 	
 	--sp1: 24px;
 	--sp2: 12px;
+	--sp3: 32px;
 	--rd1: 4px;
 
 	--cl1: #4d0083;

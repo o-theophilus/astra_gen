@@ -9,7 +9,7 @@
 </script>
 
 <main class:dark={$dark}>
-	<Nav />
+	<!-- <Nav /> -->
 	<slot />
 	<Module />
 	<Loading />

@@ -7,7 +7,7 @@ import os
 from thirdweb import ThirdwebSDK
 from thirdweb.types import SDKOptions
 from thirdweb.types.nft import NFTMetadataInput
-from uuid import uuid4
+# from uuid import uuid4
 
 
 def create_app():

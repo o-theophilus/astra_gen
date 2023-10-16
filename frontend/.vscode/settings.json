@@ -3,4 +3,7 @@
   "[svelte]": {
     "editor.defaultFormatter": "svelte.svelte-vscode"
   },
+  "cSpell.ignoreWords": [
+    "scrolller"
+  ],
 }

@@ -2,9 +2,12 @@
 	import { portal } from '$lib/store.js';
 	import Prompt from './page.prompt.svelte';
 	import Photo from './page.photo.svelte';
+	import Footer from './footer.svelte';
 
 	let history = [];
 	let error = {};
+	let down_height;
+	let nav_height;
 
 	$: if ($portal) {
 		if (!('error' in $portal)) {
@@ -17,49 +20,84 @@
 	}
 </script>
 
-<section>
-	{#each history as x}
-		<div class="gen">
-			<div class="block">
-				{x.user_prompt}
-				<br />
-				<br />
-				<div class="image">
-					{#each x.urls as src}
-						<Photo
-							user_prompt={x.user_prompt}
-							{src}
-							on:ok={(e) => {
-								history.push(e.detail);
-								history = history;
-							}}
-							on:error={(e) => [(error = e.detail)]}
-						/>
-					{/each}
+<section class="page">
+	<nav bind:clientHeight={nav_height}>
+		<img src="/image/logo.png" alt="" />
+	</nav>
+
+	<section class="scrolller" style:--scroller_height="{down_height + nav_height}px">
+		{#each history as x}
+			<div class="gen">
+				<div class="block">
+					{x.user_prompt}
+					<br />
+					<br />
+					<div class="image">
+						{#each x.urls as src}
+							<Photo
+								user_prompt={x.user_prompt}
+								{src}
+								on:ok={(e) => {
+									history.push(e.detail);
+									history = history;
+								}}
+								on:error={(e) => {
+									error = e.detail;
+								}}
+							/>
+						{/each}
+					</div>
 				</div>
 			</div>
-		</div>
-	{/each}
+		{/each}
+	</section>
+
+	<section class="down" bind:clientHeight={down_height}>
+		<Prompt
+			{error}
+			on:ok={(e) => {
+				history.push(e.detail);
+				history = history;
+			}}
+		/>
+		<Footer />
+	</section>
 </section>
 
-<Prompt
-	{error}
-	on:ok={(e) => {
-		history.push(e.detail);
-		history = history;
-	}}
-/>
-
 <style>
-	section {
-		--prompt_height: 112px;
-		min-height: calc(100vh - var(--nav_height) - var(--prompt_height));
+	.page {
+		background-image: url(/image/bg.png);
+		background-size: cover;
+		background-position: center;
+		background-attachment: fixed;
 	}
-	@media screen and (min-width: 500px) {
-		section {
-			--prompt_height: 124px;
-		}
+
+	nav {
+		position: sticky;
+		top: 0;
+
+		display: flex;
+		justify-content: center;
+
+		padding: var(--sp3);
+
+		z-index: 1;
+		background-color: rgba(0, 0, 0, 0.95);
 	}
+	img {
+		width: 100%;
+		max-width: 200px;
+	}
+	.scrolller {
+		min-height: calc(100vh - 1px - var(--scroller_height));
+	}
+	.down {
+		position: sticky;
+		bottom: 0;
+
+		background-color: rgba(0, 0, 0, 0.95);
+	}
+
 	.gen {
 		margin: var(--sp1) auto;
 		max-width: var(--body_width);

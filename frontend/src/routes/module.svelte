@@ -61,7 +61,6 @@
 			<br />
 			<img src={$module.src} alt={$module.user_prompt} onerror="this.src='/image/error.png'" />
 			<br />
-			<br />
 			<button class="btn" on:click|stopPropagation={submit}>
 				Get Variations
 
@@ -106,9 +105,14 @@
 	}
 
 	.btn {
-		fill: var(--ac5_);
 		display: flex;
 		align-items: center;
-		gap: 12px;
+		gap: var(--sp2);
+
+		padding: var(--sp2);
+		border-radius: var(--rd1);
+		fill: var(--ac5_);
+		color: var(--ac1);
+		background-color: var(--ac3);
 	}
 </style>
