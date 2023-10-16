@@ -42,7 +42,7 @@
 		height: var(--size);
 		border-radius: var(--rd1);
 
-		background-color: var(--ac5);
+		background-color: var(--ac4);
 	}
 	.task {
 		color: var(--ac1);
