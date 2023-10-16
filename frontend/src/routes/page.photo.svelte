@@ -78,9 +78,10 @@
 
 	button {
 		position: absolute;
-		bottom: 8px;
-		left: 8px;
-
+		bottom: 0;
+		left: 0;
+		
+		padding: 8px;
 		font-size: 0;
 	}
 
