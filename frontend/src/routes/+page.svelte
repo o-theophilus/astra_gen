@@ -89,7 +89,7 @@
 		max-width: 200px;
 	}
 	.scrolller {
-		min-height: calc(100vh - 1px - var(--scroller_height));
+		min-height: calc(100vh - var(--scroller_height));
 	}
 	.down {
 		position: sticky;
