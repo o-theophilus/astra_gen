@@ -85,7 +85,8 @@
 	}
 	.down {
 		position: sticky;
-		bottom: -1px;
+		/* bottom: -1px; */
+		bottom: 0;
 
 		background-color: rgba(0, 0, 0, 0.95);
 	}
