@@ -7,7 +7,6 @@
 	let history = [];
 	let error = {};
 	let down_height;
-	let nav_height;
 
 	$: if ($portal) {
 		if (!('error' in $portal)) {
@@ -21,11 +20,11 @@
 </script>
 
 <section class="page">
-	<nav bind:clientHeight={nav_height}>
-		<img src="/image/logo.png" alt="" />
-	</nav>
+	<section class="scrolller" style:--down_height="{down_height}px">
+		<nav>
+			<img src="/image/logo.png" alt="" />
+		</nav>
 
-	<section class="scrolller" style:--scroller_height="{down_height + nav_height}px">
 		{#each history as x}
 			<div class="gen">
 				<div class="block">
@@ -73,23 +72,16 @@
 	}
 
 	nav {
-		position: sticky;
-		top: 0;
-
 		display: flex;
 		justify-content: center;
-
 		padding: var(--sp3);
-
-		z-index: 1;
-		background-color: rgba(0, 0, 0, 0.95);
 	}
 	img {
 		width: 100%;
 		max-width: 200px;
 	}
 	.scrolller {
-		min-height: calc(100vh - var(--scroller_height));
+		min-height: calc(100vh - var(--down_height));
 	}
 	.down {
 		position: sticky;
