@@ -60,6 +60,7 @@ input,
 select {
 	background-color: transparent; 
 	border: none;
+	color: var(--ac2);
 
 }
 

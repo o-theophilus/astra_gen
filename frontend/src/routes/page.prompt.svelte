@@ -1,44 +1,46 @@
 <script>
-	import { loading, size, history } from '$lib/store.js';
+	import { loading, size, re_prompt } from '$lib/store.js';
 	import { createEventDispatcher } from 'svelte';
 
 	let emit = createEventDispatcher();
 
-	let user_prompt;
+	let prompt;
 	export let error = {};
 
 	const validate = () => {
 		error = {};
-		if (!user_prompt) {
+		if (!prompt) {
 			error.prompt = 'cannot be empty';
 		}
-		Object.keys(error).length === 0 && translate_prompt();
+		Object.keys(error).length === 0 && submit();
 	};
 
-	const translate_prompt = async () => {
-		$loading = 'Generating Images';
-		let resp = await fetch('https://api.openai.com/v1/chat/completions', {
-			method: 'post',
-			headers: {
-				'Content-Type': 'application/json',
-				Authorization: `Bearer ${import.meta.env.VITE_OPENAI_KEY}`,
-				'OpenAI-Organization': import.meta.env.VITE_OPENAI_ORG
-			},
-			body: JSON.stringify({
-				model: 'gpt-3.5-turbo',
-				messages: history(user_prompt),
-				temperature: 0.2
-			})
+	const submit = async () => {
+		let urls = [];
+
+		while (urls.length < 4) {
+			$loading = `Generating Image (${urls.length + 1} of 4)`;
+			let resp = await generate(re_prompt(prompt));
+			// console.log(resp);
+
+			if (!resp.error) {
+				urls.push(resp.data[0].url);
+			}
+		}
+
+		setTimeout(() => {
+			window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+			$loading = false;
+		}, 100);
+
+		emit('ok', {
+			user_prompt: prompt,
+			urls
 		});
-		$loading = false;
-
-		resp = await resp.json();
-		// console.log(resp.choices[0].message.content);
-		generate_image(resp.choices[0].message.content);
+		prompt = '';
 	};
 
-	const generate_image = async (dall_e_prompt) => {
-		$loading = 'Generating Images';
+	const generate = async (inp) => {
 		let resp = await fetch('https://api.openai.com/v1/images/generations', {
 			method: 'post',
 			headers: {
@@ -47,34 +49,16 @@
 				'OpenAI-Organization': import.meta.env.VITE_OPENAI_ORG
 			},
 			body: JSON.stringify({
-				prompt: dall_e_prompt,
-				n: 4,
+				model: 'dall-e-3',
+				quality: 'hd',
+				prompt: inp,
+				n: 1,
 				size: `${size}x${size}`
 			})
 		});
 
-		setTimeout(() => {
-			window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
-			$loading = false;
-		}, 100);
-
 		resp = await resp.json();
-
-		if (!resp.error) {
-			let urls = [];
-			for (const x of resp.data) {
-				urls.push(x.url);
-			}
-
-			emit('ok', {
-				user_prompt,
-				urls
-			});
-
-			user_prompt = '';
-		} else {
-			error.error = resp.error.message;
-		}
+		return resp;
 	};
 </script>
 
@@ -82,7 +66,7 @@
 	<label for="prompt"> Describe your clothing idea:</label>
 	<div class="input">
 		<input
-			bind:value={user_prompt}
+			bind:value={prompt}
 			id="prompt"
 			type="text"
 			placeholder="E.g. A loose red shirt made of suede for men to go for dinner."
