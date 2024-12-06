@@ -1,5 +1,4 @@
 <script>
-	import Nav from './layout.nav.svelte';
 	import Loading from './loading.svelte';
 	import Module from './module.svelte';
 	import './layout.var.css';
@@ -9,7 +8,6 @@
 </script>
 
 <main class:dark={$dark}>
-	<!-- <Nav /> -->
 	<slot />
 	<Module />
 	<Loading />

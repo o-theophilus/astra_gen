@@ -1,20 +1,15 @@
 <script>
 	import { portal } from '$lib/store.js';
-	import Prompt from './page.prompt.svelte';
-	import Photo from './page.photo.svelte';
+	import Prompt from './prompt.svelte';
+	import Photo from './photo.svelte';
 	import Footer from './footer.svelte';
 
 	let history = [];
-	let error = {};
 	let down_height;
 
 	$: if ($portal) {
-		if (!('error' in $portal)) {
-			history.push($portal);
-			history = history;
-		} else {
-			error = $portal;
-		}
+		history.push($portal);
+		history = history;
 		$portal = '';
 	}
 </script>
@@ -28,24 +23,27 @@
 		{#each history as x}
 			<div class="gen">
 				<div class="block">
-					{x.user_prompt}
-					<br />
-					<br />
-					<div class="image">
-						{#each x.urls as src}
-							<Photo
-								user_prompt={x.user_prompt}
-								{src}
-								on:ok={(e) => {
-									history.push(e.detail);
-									history = history;
-								}}
-								on:error={(e) => {
-									error = e.detail;
-								}}
-							/>
-						{/each}
-					</div>
+					{#if x.error}
+						<span class="error">
+							{x.error}
+						</span>
+					{:else}
+						{x.prompt}
+						<br />
+						<br />
+						<div class="image">
+							{#each x.urls as src}
+								<Photo
+									prompt={x.prompt}
+									{src}
+									on:ok={(e) => {
+										history.push(e.detail);
+										history = history;
+									}}
+								/>
+							{/each}
+						</div>
+					{/if}
 				</div>
 			</div>
 		{/each}
@@ -53,7 +51,6 @@
 
 	<section class="down" bind:clientHeight={down_height}>
 		<Prompt
-			{error}
 			on:ok={(e) => {
 				history.push(e.detail);
 				history = history;
