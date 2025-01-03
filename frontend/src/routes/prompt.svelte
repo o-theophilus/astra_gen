@@ -22,7 +22,6 @@
 			$loading = 'Analyzing texture';
 			let resp1 = await photo_to_text();
 			texture_info = resp1.choices[0].message.content;
-			console.log(texture_info);
 		}
 
 		while (urls.length < 4) {

@@ -1,6 +1,7 @@
 <script>
 	import Loading from './loading.svelte';
 	import Module from './module.svelte';
+	import ModuleAgent from './agent/module.svelte';
 	import './layout.var.css';
 	import './layout.main.css';
 
@@ -10,6 +11,7 @@
 <main class:dark={$dark}>
 	<slot />
 	<Module />
+	<ModuleAgent />
 	<Loading />
 </main>
 

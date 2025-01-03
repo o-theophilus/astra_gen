@@ -29,28 +29,6 @@ ${texture_note}
 `;
 };
 
-export let prompt_engine_0 = (prompt, texture_info = "") => {
-    const texture_note = texture_info ? `
-    5. use the information below to texture the cloth:
-    -------------------------------
-    ${texture_info}
-    -------------------------------
-    ` : "";
-    return `
-Description: ${prompt}
----------------
-From the above text description, extract various clothing attributes. Examples of attributes to look out for are: fit, gender, size, category, material, pattern, occasion, color, and style.
-
-Using these attributes, generate a beautiful illustration of the clothing item with meticulous attention to detail. The illustration should:
-1. Have a plain white background.
-2. Focus on presenting the clothing illustration clearly.
-3. Be styled after Rockstar Games' GTA 5 artwork, incorporating cel shading and a polished, detailed aesthetic.
-4. Highlight the item's fit and intricate details while ensuring it can be realistically produced using standard techniques.
-${texture_note}
-`;
-};
-
-
 
 export let old_prompt_engine = (prompt) => {
     return `
